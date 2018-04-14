@@ -31,7 +31,8 @@ class c_upload extends Controller
             $ext      =  pathinfo($filename_ori, PATHINFO_EXTENSION);
 
             $filename = _randomStr(10).'.'.$ext;
-    		$path = $this->path.$filename;
+    		$path     = $this->path.$filename;
+
     		move_uploaded_file($tmp, storage_path('app/public/'.$path));
     		
     		$user = new m_user;
