@@ -10,6 +10,7 @@
 | contains the "web" middleware group. Now create something great!
 |
 */
+use App\m_user;
 
 Route::get('/', function () {
     return view('home');
@@ -36,6 +37,7 @@ Route::post('/store-upload/{id}','c_upload@uploadFoto');
 
 
 Route::get('/show','c_upload@show');
+
 
 /*Route::redirect('/this', '/that', 301);
 

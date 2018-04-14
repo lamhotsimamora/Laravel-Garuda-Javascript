@@ -28,26 +28,37 @@ class c_upload extends Controller
     	{
     		$tmp      = $request->file('t_image_user');
     		$filename_ori = $request->file('t_image_user')->getClientOriginalName();
-            $ext      =  pathinfo($filename_ori, PATHINFO_EXTENSION);
+            $ext      =  strtolower(pathinfo($filename_ori, PATHINFO_EXTENSION));
+            $size     = $request->file('t_image_user')->getClientSize();
 
-            $filename = _randomStr(10).'.'.$ext;
-    		$path     = $this->path.$filename;
+            if ($ext == 'jpg' || $ext == 'png' || $ext == 'jpeg')
+            {
+                if ($size >= 1000000)
+                {
+                    return $this->index($id,'File {'.$filename_ori.'} is too large ! Maximum is 1 MB',false);
+                }
 
-    		move_uploaded_file($tmp, storage_path('app/public/'.$path));
-    		
-    		$user = new m_user;
-			$result =  $user->set(array(
-	    		'foto'    => $path,
-	    		'id_user' => $id
-	    	  )
-			)->uploadFoto();
-    		
-    		if ($result)
-    		{
-    			return $this->index($id,'File '.$filename_ori.' has been uploaded !',true);
-    		}else{
-    			return $this->index($id,'Failed upload file '.$filename_ori.'',false);
-    		}
+                $filename = _randomStr(10).'.'.$ext;
+                $path     = $this->path.$filename;
+
+                move_uploaded_file($tmp, storage_path('app/public/'.$path));
+                
+                $user = new m_user;
+                $result =  $user->set(array(
+                    'foto'    => $path,
+                    'id_user' => $id
+                  )
+                )->uploadFoto();
+                
+                if ($result)
+                {
+                    return $this->index($id,'File {'.$filename_ori.'} has been uploaded !',true);
+                }else{
+                    return $this->index($id,'Failed upload file {'.$filename_ori.'}',false);
+                }   
+            }else{
+                return $this->index($id,'File {'.$filename_ori.'} is not image !',false);
+            }
     	}else{
     		return $this->index($id,'File is empty !',false);
     	}

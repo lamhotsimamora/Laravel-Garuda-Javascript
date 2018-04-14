@@ -63,11 +63,13 @@ class m_user extends Model
 
     public function deleteData()
     {
-    	return DB::table('t_user')->where('id', $this->id_user)->delete();
-
         $filename = $this->getFileNameFoto();
-
-        file_exists(storage_path('app/public/user/'.$filename)) ? unlink(storage_path('app/public/user/'.$filename)) : '';
+        $path     = storage_path('app/public/'.$filename);
+        if (file_exists($path))
+        {
+            unlink($path);
+            return DB::table('t_user')->where('id', $this->id_user)->delete();
+        } 
     }
 
     public function getAllData()
@@ -82,8 +84,7 @@ class m_user extends Model
 
     public function getFileNameFoto()
     {
-        $users = DB::table('t_user')->where('id', $this->id_user)->get();
-        $users = json_encode($users);
-        return $users->{'foto'};
+        $result = DB::table('t_user')->select('foto')->where('id', $this->id_user)->get();
+        return $result[0]->foto;
     }
 }
