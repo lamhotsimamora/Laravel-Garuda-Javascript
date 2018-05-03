@@ -34,6 +34,13 @@ class m_user extends Model
         }
 		return $this;
 	}
+
+    public function checkIdFoto()
+    {
+        $result = DB::table('t_user')->select('id')->where('id', $this->id_user)->get();
+        $tot = count($result);
+        return ($tot>0) ? true : false;
+    }
 	
     public function addData()
     {

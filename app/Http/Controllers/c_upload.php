@@ -21,10 +21,24 @@ class c_upload extends Controller
 		return view('upload',array('id_user'=>$id,'message'=>$msg,'type'=>$type));
 	}
 
+    private function checkIdFoto(Request $req)
+    {
+         $id_user = $req->input('id');
+
+         $user = new m_user;
+
+         $user->set([
+            'id_user' => $id_user
+         ]);
+
+         return $user->checkIdFoto();
+    }
+
 
     public function uploadFoto(Request $request,$id=null)
     {
-    	if ($request->hasFile('t_image_user'))
+        
+    	if ($request->hasFile('t_image_user') && $id!=null)
     	{
     		$tmp      = $request->file('t_image_user');
     		$filename_ori = $request->file('t_image_user')->getClientOriginalName();

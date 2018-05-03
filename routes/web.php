@@ -33,26 +33,9 @@ Route::get('/get-data-single','c_user@getUser');
 Route::post('/get-data-single','c_user@getUser');
 
 Route::get('/upload/{id}','c_upload@index');
+
+Route::get('/store-upload/{id}','c_upload@uploadFoto');
 Route::post('/store-upload/{id}','c_upload@uploadFoto');
 
 
 Route::get('/show','c_upload@show');
-
-
-/*Route::redirect('/this', '/that', 301);
-
-Route::get('/that',function(){
-	// asset('storage/file.txt');
-});
-
-Route::view('/oke','/siap');
-
-Route::get('posts/{post}/comments/{comment}', function ($postId, $commentId) {
-    echo $postId;
-    echo "<br>";
-    echo $commentId;
-});
-
-Route::get('/example',function(){
-	return redirect()->route('oke');
-});*/
