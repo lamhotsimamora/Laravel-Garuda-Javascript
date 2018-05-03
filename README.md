@@ -1,5 +1,5 @@
 # Laravel-Garuda-Javascript
-
+Laravel 5.5
 
 # Preview
 <img src="laravel-record.gif" width="300" height="300">
